@@ -198,7 +198,7 @@ class InternVL2(lmms):
             self.device_map = f"cuda:{accelerator.local_process_index}"
         elif accelerator.num_processes == 1 and device_map == "auto":
             self._device = torch.device(device)
-            device_map = split_model(pretrained.split("/")[-1], num_layers=num_layers)
+            # device_map = split_model(pretrained.split("/")[-1], num_layers=num_layers)
             self.device_map = device_map
         else:
             self._device = torch.device(f"cuda:{accelerator.local_process_index}")
@@ -229,7 +229,7 @@ class InternVL2(lmms):
                 eval_logger.info(f"Using {accelerator.num_processes} devices with data parallelism")
             self._rank = self.accelerator.local_process_index
             self._world_size = self.accelerator.num_processes
-        elif accelerator.num_processes == 1 and device_map == "auto":
+        elif accelerator.num_processes == 1 and (device_map == "auto" or len(device_map) > 2):
             eval_logger.info(f"Using {accelerator.num_processes} devices with tensor parallelism")
             self._rank = 0
             self._word_size = 1
