@@ -40,8 +40,7 @@ class Phi3v(lmms):
         **kwargs,
     ) -> None:
         super().__init__()
-        # Do not use kwargs for now
-        assert kwargs == {}, f"Unexpected kwargs: {kwargs}"
+
         # Setup accelerator.
         accelerator = Accelerator()
         if accelerator.num_processes > 1:
