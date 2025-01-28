@@ -31,7 +31,7 @@ class Phi3v(lmms):
 
     def __init__(
         self,
-        model_id_name: str = "microsoft/Phi-3-vision-128k-instruct",
+        pretrained: str = "microsoft/Phi-3-vision-128k-instruct",
         device: str = "cuda",
         dtype: Optional[Union[str, torch.dtype]] = "auto",
         batch_size: int = 1,
@@ -48,8 +48,8 @@ class Phi3v(lmms):
         else:
             self._device = device
         # Load model.
-        self._model = AutoModelForCausalLM.from_pretrained(model_id_name, device_map=device, trust_remote_code=trust_remote_code, torch_dtype=dtype)
-        self._processor = AutoProcessor.from_pretrained(model_id_name, trust_remote_code=trust_remote_code)
+        self._model = AutoModelForCausalLM.from_pretrained(pretrained, device_map=device, trust_remote_code=trust_remote_code, torch_dtype=dtype)
+        self._processor = AutoProcessor.from_pretrained(pretrained, trust_remote_code=trust_remote_code)
         self._processor.tokenizer.padding_side = "left"
         self._tokenizer = self._processor.tokenizer
         self._config = self._model.config
