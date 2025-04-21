@@ -5,6 +5,8 @@ import sys
 import hf_transfer
 from loguru import logger
 
+from lmms_eval.evaluator_utils import print_writeout
+
 os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
 
 logger.remove()
@@ -81,4 +83,13 @@ if os.environ.get("LMMS_EVAL_PLUGINS", None):
     for plugin in os.environ["LMMS_EVAL_PLUGINS"].split(","):
         m = importlib.import_module(f"{plugin}.models")
         for model_name, model_class in getattr(m, "AVAILABLE_MODELS").items():
+            print("DEBUG")
+            print(f"{m=}")
+            print(f"{model_name=}")
+            print(f"{model_class=}")
+            print(f"{model_class=}")
             AVAILABLE_MODELS[model_name] = f"{plugin}.models.{model_name}.{model_class}"
+            print(f"{AVAILABLE_MODELS[model_name]=}")
+
+    print("AVIAIBLE MODELS")
+    print(AVAILABLE_MODELS)
